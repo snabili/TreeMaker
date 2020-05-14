@@ -1135,6 +1135,70 @@ def makeTreeFromMiniAOD(self,process):
             'trackFilter:trkshitpattern(Tracks_hitPattern)',
         ])
 
+
+    ## ----------------------------------------------------------------------------------------------
+    ## AK15 jets
+    ## ----------------------------------------------------------------------------------------------
+
+    bTagDiscriminators = [
+        'pfJetProbabilityBJetTags',
+        'pfCombinedInclusiveSecondaryVertexV2BJetTags',
+        ]
+    subjetBTagDiscriminators = [
+        'pfJetProbabilityBJetTags',
+        'pfCombinedInclusiveSecondaryVertexV2BJetTags',
+        ]
+    JETCorrLevels = [
+        'L2Relative',
+        'L3Absolute',
+        'L2L3Residual'
+        ]
+
+
+    from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
+    jetToolbox(process,
+        'ak15',
+        'jetSequence',
+        'out',
+        PUMethod = 'Puppi',
+        miniAOD = True,
+        runOnMC = self.geninfo,
+        postFix = 'TTEST',
+        Cut = 'pt>170.',
+        addPruning = True,
+        addSoftDrop = True,
+        addSoftDropSubjets = True,
+        addNsub = True,
+        maxTau = 3,
+        subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
+        addEnergyCorrFunc = False,
+        associateTask = False,
+        verbosity = 2 if self.verbose else 0,
+        # 
+        JETCorrPayload = 'AK8PFPuppi',
+        subJETCorrPayload = 'AK4PFPuppi',
+        JETCorrLevels = JETCorrLevels,
+        subJETCorrLevels = JETCorrLevels,
+        # 
+        # bTagDiscriminators = bTagDiscriminators,
+        # subjetBTagDiscriminators = subjetBTagDiscriminators
+        )
+
+    # JetAK8Tag = cms.InputTag("packedPatJetsAK8PFPuppi94XlikeSoftDrop")
+    # SubjetTag = cms.InputTag("selectedPatJetsAK8PFPuppi94XlikeSoftDropPacked:SubJets")
+
+    TTEST_JetAK15Tag = cms.InputTag("packedPatJetsAK8PFPuppiTTESTSoftDrop")
+    TTEST_SubjetTag = cms.InputTag("selectedPatJetsAK4PFPuppiTTESTSoftDropPacked:SubJets")
+
+    process = self.makeJetVars(
+        process,
+        JetTag=TTEST_JetAK15Tag,
+        suff='thomastest',
+        storeProperties=2,
+        # SkipTag=SkipTag,
+        METfix=self.doMETfix,
+        )
+
     ## ----------------------------------------------------------------------------------------------
     ## ----------------------------------------------------------------------------------------------
     ## Final steps
