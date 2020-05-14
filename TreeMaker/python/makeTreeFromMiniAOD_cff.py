@@ -1184,6 +1184,18 @@ def makeTreeFromMiniAOD(self,process):
         # subjetBTagDiscriminators = subjetBTagDiscriminators
         )
 
+    TTEST_JetAK15Tag = cms.InputTag("packedPatJetsAK15PFPuppiSoftDrop")
+
+    # get puppi-specific multiplicities
+    from PhysicsTools.PatAlgos.patPuppiJetSpecificProducer_cfi import patPuppiJetSpecificProducer
+    process.puppiSpecificAK8 = patPuppiJetSpecificProducer.clone(
+        src = TTEST_JetAK15Tag
+    )
+    # update userfloats (used for jet ID, including ID for JEC/JER variations)
+    process, TTEST_JetAK15Tag = addJetInfo(process, TTEST_JetAK15Tag,
+        ['puppiSpecificAK15:puppiMultiplicity','puppiSpecificAK15:neutralPuppiMultiplicity','puppiSpecificAK15:neutralHadronPuppiMultiplicity',
+         'puppiSpecificAK15:photonPuppiMultiplicity','puppiSpecificAK15:HFHadronPuppiMultiplicity','puppiSpecificAK15:HFEMPuppiMultiplicity'])
+
     updateJetCollection(
         process,
         jetSource=cms.InputTag('packedPatJetsAK15PFPuppiSoftDrop'),
@@ -1200,16 +1212,19 @@ def makeTreeFromMiniAOD(self,process):
     # TTEST_SubjetTag = cms.InputTag("selectedPatJetsAK4PFPuppiTTESTSoftDropPacked:SubJets")
 
     # TTEST_JetAK15Tag = cms.InputTag("ak15PFJetsPuppiTTESTSoftDrop")
-    TTEST_JetAK15Tag = cms.InputTag("packedPatJetsAK15PFPuppiSoftDrop")
     
-    process = self.makeJetVars(
+    process = self.makeJetVarsAK8(
         process,
         JetTag=TTEST_JetAK15Tag,
         suff='thomastest',
         storeProperties=2,
         # SkipTag=SkipTag,
-        METfix=self.doMETfix,
+        # METfix=self.doMETfix,
         )
+
+    process.JetPropertiesthomastest.neutralHadronPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralHadronPuppiMultiplicity")
+    process.JetPropertiesthomastest.neutralPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralPuppiMultiplicity")
+    process.JetPropertiesthomastest.photonPuppiMultiplicity = cms.vstring("puppiSpecificAK15:photonPuppiMultiplicity")
 
     ## ----------------------------------------------------------------------------------------------
     ## ----------------------------------------------------------------------------------------------
