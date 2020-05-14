@@ -1135,6 +1135,86 @@ def makeTreeFromMiniAOD(self,process):
             'trackFilter:trkshitpattern(Tracks_hitPattern)',
         ])
 
+
+    ## ----------------------------------------------------------------------------------------------
+    ## AK15 jets
+    ## ----------------------------------------------------------------------------------------------
+
+    bTagDiscriminators = [
+        'pfJetProbabilityBJetTags',
+        'pfCombinedInclusiveSecondaryVertexV2BJetTags',
+        ]
+    subjetBTagDiscriminators = [
+        'pfJetProbabilityBJetTags',
+        'pfCombinedInclusiveSecondaryVertexV2BJetTags',
+        ]
+    JETCorrLevels = [
+        'L2Relative',
+        'L3Absolute',
+        'L2L3Residual'
+        ]
+
+    from JMEAnalysis.JetToolbox.jetToolbox_cff import jetToolbox
+    jetToolbox(process,
+        'ak15',
+        'jetSequence',
+        'out',
+        PUMethod = 'Puppi',
+        miniAOD = True,
+        runOnMC = self.geninfo,
+        Cut = 'pt>170.',
+        addPruning = True,
+        addSoftDrop = True,
+        addSoftDropSubjets = True,
+        addNsub = True,
+        maxTau = 3,
+        subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
+        addEnergyCorrFunc = False,
+        associateTask = False,
+        verbosity = 2 if self.verbose else 0,
+        # 
+        JETCorrPayload = 'AK8PFPuppi',
+        subJETCorrPayload = 'AK4PFPuppi',
+        JETCorrLevels = JETCorrLevels,
+        subJETCorrLevels = JETCorrLevels,
+        )
+
+    JetAK15Tag = cms.InputTag("packedPatJetsAK15PFPuppiSoftDrop")
+    subJetAK15Tag = cms.InputTag("selectedPatJetsAK15PFPuppiSoftDropPacked:SubJets")
+
+    # get puppi-specific multiplicities
+    from PhysicsTools.PatAlgos.patPuppiJetSpecificProducer_cfi import patPuppiJetSpecificProducer
+    process.puppiSpecificAK15 = patPuppiJetSpecificProducer.clone(
+        src = JetAK15Tag
+        )
+    # update userfloats (used for jet ID, including ID for JEC/JER variations)
+    process, JetAK15Tag = addJetInfo(
+        process, JetAK15Tag,
+        [
+            'puppiSpecificAK15:puppiMultiplicity',
+            'puppiSpecificAK15:neutralPuppiMultiplicity',
+            'puppiSpecificAK15:neutralHadronPuppiMultiplicity',
+            'puppiSpecificAK15:photonPuppiMultiplicity',
+            'puppiSpecificAK15:HFHadronPuppiMultiplicity',
+            'puppiSpecificAK15:HFEMPuppiMultiplicity'
+            ]
+        )
+
+    process = self.makeJetVarsAK8(
+        process,
+        JetTag=JetAK15Tag,
+        suff='AK15',
+        storeProperties=2,
+        puppiSpecific = 'puppiSpecificAK15',
+        subjetTag = 'SoftDrop',
+        doECFs = False,
+        isAK15 = True
+        )
+
+    process.JetPropertiesAK15.neutralHadronPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralHadronPuppiMultiplicity")
+    process.JetPropertiesAK15.neutralPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralPuppiMultiplicity")
+    process.JetPropertiesAK15.photonPuppiMultiplicity = cms.vstring("puppiSpecificAK15:photonPuppiMultiplicity")
+
     ## ----------------------------------------------------------------------------------------------
     ## ----------------------------------------------------------------------------------------------
     ## Final steps

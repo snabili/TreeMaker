@@ -576,16 +576,16 @@ JetProperties::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 	if (!GenSubjetTok_.isUninitialized()) iEvent.getByToken(GenSubjetTok_,GenSubjets);
 	if( Jets.isValid() ) {
 		for(const auto& Jet : *Jets){
+			//for debugging: print out available subjet collections, btag discriminators, userfloats/ints
+			//will recurse through subjet collections if any
+			if(debug){
+				edm::LogInfo("TreeMaker") << debugMessage(Jet,JetTag_.encode());
+			}
 			EnergyFractionCalculator efc(Jet);
 			for(auto & Ptr : Ptrs_){
 				if(Ptr->fraction) Ptr->get_property(efc);
 				else if(GenSubjets.isValid() && Ptr->response) Ptr->get_property(Jet,*GenSubjets);
 				else Ptr->get_property(Jet);
-			}
-			//for debugging: print out available subjet collections, btag discriminators, userfloats/ints
-			//will recurse through subjet collections if any
-			if(debug){
-				edm::LogInfo("TreeMaker") << debugMessage(Jet,JetTag_.encode());
 			}
 		}
 	}
