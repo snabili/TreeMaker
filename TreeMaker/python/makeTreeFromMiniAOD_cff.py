@@ -652,7 +652,7 @@ def makeTreeFromMiniAOD(self,process):
 
     
     ## ----------------------------------------------------------------------------------------------
-    ## JER smearing, various uncertainties
+    ## Fa smearing, various uncertainties
     ## ----------------------------------------------------------------------------------------------
     
     # list of clean tags - ignore jet ID for jets matching these objects
@@ -1216,8 +1216,18 @@ def makeTreeFromMiniAOD(self,process):
         # 
         # subjetTag = 'SoftDropPuppi'
         # subjetTag = 'selectedPatJetsAK15PFPuppiSoftDropPacked:SubJets'
-        subjetTag = 'selectedPatJetsAK15PFPuppiSoftDropPackedSubJets'
+        # subjetTag = 'selectedPatJetsAK15PFPuppiSoftDropPackedSubJets'
+        subjetTag = 'SoftDrop',
+        doECFs = False,
+        isAK15 = True
         )
+
+    # print(process.JetPropertiesAK15.properties)
+    # print(dir(process.JetPropertiesAK15.properties))
+    # print(process.JetPropertiesAK15)
+    # print(dir(process.JetPropertiesAK15))
+    # from sys import exit
+    # exit()
 
     process.JetPropertiesAK15.neutralHadronPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralHadronPuppiMultiplicity")
     process.JetPropertiesAK15.neutralPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralPuppiMultiplicity")
