@@ -1185,6 +1185,7 @@ def makeTreeFromMiniAOD(self,process):
         )
 
     TTEST_JetAK15Tag = cms.InputTag("packedPatJetsAK15PFPuppiSoftDrop")
+    TTEST_subJetAK15Tag = cms.InputTag("selectedPatJetsAK15PFPuppiSoftDropPacked:SubJets")
 
     # get puppi-specific multiplicities
     from PhysicsTools.PatAlgos.patPuppiJetSpecificProducer_cfi import patPuppiJetSpecificProducer
@@ -1211,6 +1212,11 @@ def makeTreeFromMiniAOD(self,process):
         storeProperties=2,
         # SkipTag=SkipTag,
         # METfix=self.doMETfix,
+        puppiSpecific = 'puppiSpecificAK15',
+        # 
+        # subjetTag = 'SoftDropPuppi'
+        # subjetTag = 'selectedPatJetsAK15PFPuppiSoftDropPacked:SubJets'
+        subjetTag = 'selectedPatJetsAK15PFPuppiSoftDropPackedSubJets'
         )
 
     process.JetPropertiesAK15.neutralHadronPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralHadronPuppiMultiplicity")
