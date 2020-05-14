@@ -389,11 +389,16 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
                 'JetProperties'+suff+':jecFactor(Jets'+suff+'_jecFactor)',
             ])
             if self.geninfo:
-                # JetPropertiesAK8.properties.extend(["jerFactor"])
-                # JetPropertiesAK8.jerFactor = cms.vstring("jerFactor")
-                # self.VectorDouble.extend([
-                #     'JetProperties'+suff+':jerFactor(Jets'+suff+'_jerFactor)',
-                # ])
+                JetPropertiesAK8.properties.extend(["jerFactor"])
+                JetPropertiesAK8.jerFactor = cms.vstring("jerFactor")
+                if isAK15:
+                    self.VectorDouble.extend([
+                        'JetProperties'+suff+':jerFactor(Jets'+suff+'_jerFactor)',
+                    ])
+                else:
+                    self.VectorDouble.extend([
+                        'JetProperties'+suff+':jerFactor(JetsAK15'+suff+'_jerFactor)',
+                    ])
                 if self.systematics:
                     # account for central JER smearing
                     JetPropertiesAK8.properties.extend(["origIndex"])
