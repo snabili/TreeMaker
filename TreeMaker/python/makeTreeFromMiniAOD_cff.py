@@ -1163,7 +1163,7 @@ def makeTreeFromMiniAOD(self,process):
         PUMethod = 'Puppi',
         miniAOD = True,
         runOnMC = self.geninfo,
-        postFix = 'TTEST',
+        # postFix = 'TTEST',
         Cut = 'pt>170.',
         addPruning = True,
         addSoftDrop = True,
@@ -1184,12 +1184,24 @@ def makeTreeFromMiniAOD(self,process):
         # subjetBTagDiscriminators = subjetBTagDiscriminators
         )
 
+    updateJetCollection(
+        process,
+        jetSource=cms.InputTag('packedPatJetsAK15PFPuppiSoftDrop'),
+        rParam=1.5,
+        jetCorrections=('AK8PFPuppi', cms.vstring(JETCorrLevels), 'None'),
+        # btagDiscriminators=bTagDiscriminators + pfDeepBoostedJetTagsProbs + pfMassDecorrelatedDeepBoostedJetTagsProbs,
+        postfix='AK15WithPuppiDaughters',
+        )
+
     # JetAK8Tag = cms.InputTag("packedPatJetsAK8PFPuppi94XlikeSoftDrop")
     # SubjetTag = cms.InputTag("selectedPatJetsAK8PFPuppi94XlikeSoftDropPacked:SubJets")
 
-    TTEST_JetAK15Tag = cms.InputTag("packedPatJetsAK8PFPuppiTTESTSoftDrop")
-    TTEST_SubjetTag = cms.InputTag("selectedPatJetsAK4PFPuppiTTESTSoftDropPacked:SubJets")
+    # TTEST_JetAK15Tag = cms.InputTag("packedPatJetsAK8PFPuppiTTESTSoftDrop")
+    # TTEST_SubjetTag = cms.InputTag("selectedPatJetsAK4PFPuppiTTESTSoftDropPacked:SubJets")
 
+    # TTEST_JetAK15Tag = cms.InputTag("ak15PFJetsPuppiTTESTSoftDrop")
+    TTEST_JetAK15Tag = cms.InputTag("packedPatJetsAK15PFPuppiSoftDrop")
+    
     process = self.makeJetVars(
         process,
         JetTag=TTEST_JetAK15Tag,
