@@ -303,7 +303,6 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
                 "softDropMass"          ,
                 "bDiscriminatorCSV"     ,
                 "subjets"               ,
-                "SJbDiscriminatorCSV"   ,
             )
         )
         # specify userfloats
@@ -389,16 +388,16 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
                 'JetProperties'+suff+':jecFactor(Jets'+suff+'_jecFactor)',
             ])
             if self.geninfo:
-                JetPropertiesAK8.properties.extend(["jerFactor"])
-                JetPropertiesAK8.jerFactor = cms.vstring("jerFactor")
-                if isAK15:
-                    self.VectorDouble.extend([
-                        'JetProperties'+suff+':jerFactor(Jets'+suff+'_jerFactor)',
-                    ])
-                else:
-                    self.VectorDouble.extend([
-                        'JetProperties'+suff+':jerFactor(JetsAK15'+suff+'_jerFactor)',
-                    ])
+                # JetPropertiesAK8.properties.extend(["jerFactor"])
+                # JetPropertiesAK8.jerFactor = cms.vstring("jerFactor")
+                # if isAK15:
+                #     self.VectorDouble.extend([
+                #         'JetProperties'+suff+':jerFactor(JetsAK15'+suff+'_jerFactor)',
+                #     ])
+                # else:
+                #     self.VectorDouble.extend([
+                #         'JetProperties'+suff+':jerFactor(Jets'+suff+'_jerFactor)',
+                #     ])
                 if self.systematics:
                     # account for central JER smearing
                     JetPropertiesAK8.properties.extend(["origIndex"])
@@ -475,7 +474,7 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
 
             # extra stuff for subjets
             if not(isAK15):
-                JetPropertiesAK8.properties.extend(["jecFactorSubjets", "SJptD", "SJaxismajor", "SJaxisminor", "SJmultiplicity"])
+                JetPropertiesAK8.properties.extend(["jecFactorSubjets", "SJptD", "SJaxismajor", "SJaxisminor", "SJmultiplicity", 'SJbDiscriminatorCSV'])
                 JetPropertiesAK8.jecFactorSubjets = cms.vstring(subjetTag)
                 JetPropertiesAK8.SJptD = cms.vstring(subjetTag,'QGTaggerSubjets:ptD')
                 JetPropertiesAK8.SJaxismajor = cms.vstring(subjetTag,'QGTaggerSubjets:axis1')
