@@ -4,6 +4,11 @@ from TreeMaker.WeightProducer.MCSampleValues import MCSampleValuesHelper
 XSValues = MCSampleValuesHelper.XSValues
 
 SVJxsecs = {
+    # Boosted:
+    "s-channel_mMed-300"  : {
+        "CrossSection" : XSValues(XS_13TeV=100.), # CROSS SECTION IS A GUESS. Samples have an HT>1000 cut of which we don't know the efficiency yet anyway
+    },
+    # Non-boosted:
     "mZprime-500"  : {
         "CrossSection" : XSValues(XS_13TeV=71.37),
     },
