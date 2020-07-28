@@ -6,6 +6,8 @@ from TreeMaker.WeightProducer.MCSample import MCSample
 SVJsamples = [
     # Boosted:
     MCSample("step4_MINIAOD_s-channel_mMed-300_mDark-10_rinv-0.3_alpha-0.2_HT1000_13TeV-madgraphMLM-pythia8_n-1000", "", "", "Constant", 3763),
+    #    For: miniaodv2_2018_s-channel_mMed-150_mDark-20_rinv-0.3_alpha-peak_HT400_13TeV-madgraphMLM-pythia8_n-1000_cff.py
+    MCSample("Jun17s-channel_mMed-150_mDark-20_rinv-0.3_alpha-peak_HT400_13TeV-madgraphMLM-pythia8", "", "", "Constant", 102903),
     # Main analysis:
     MCSample("step4_MINIAOD_2016_mZprime-3000_mDark-20_rinv-0.3_alpha-0.2_n-1000", "ProductionV3", "", "Constant", 48974),
     MCSample("step4_MINIAOD_mZprime-3000_mDark-20_rinv-0.3_alpha-0.2_n-1000", "ProductionV3", "", "Constant", 49414),

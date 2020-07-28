@@ -5,6 +5,9 @@ XSValues = MCSampleValuesHelper.XSValues
 
 SVJxsecs = {
     # Boosted:
+    "Jun17s-channel_mMed-150"  : {
+        "CrossSection" : XSValues(XS_13TeV=100.), # CROSS SECTION IS A GUESS. Samples have an HT>400 cut of which we don't know the efficiency yet anyway
+    },
     "s-channel_mMed-300"  : {
         "CrossSection" : XSValues(XS_13TeV=100.), # CROSS SECTION IS A GUESS. Samples have an HT>1000 cut of which we don't know the efficiency yet anyway
     },
