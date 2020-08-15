@@ -1167,7 +1167,7 @@ def makeTreeFromMiniAOD(self,process):
         PUMethod = 'Puppi',
         miniAOD = True,
         runOnMC = self.geninfo,
-        Cut = 'pt>170.',
+        Cut = 'pt>20.',
         addPruning = True,
         addSoftDrop = True,
         addSoftDropSubjets = True,
@@ -1192,6 +1192,7 @@ def makeTreeFromMiniAOD(self,process):
     process.puppiSpecificAK15 = patPuppiJetSpecificProducer.clone(
         src = JetAK15Tag
         )
+
     # update userfloats (used for jet ID, including ID for JEC/JER variations)
     process, JetAK15Tag = addJetInfo(
         process, JetAK15Tag,
