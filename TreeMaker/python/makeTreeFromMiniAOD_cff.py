@@ -317,7 +317,7 @@ def makeTreeFromMiniAOD(self,process):
                 subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
                 JETCorrLevels = levels,
                 subJETCorrLevels = levels,
-                addEnergyCorrFunc = False,
+                addEnergyCorrFunc = True,
                 associateTask = False,
                 verbosity = 2 if self.verbose else 0,
             )
@@ -1167,14 +1167,14 @@ def makeTreeFromMiniAOD(self,process):
         PUMethod = 'Puppi',
         miniAOD = True,
         runOnMC = self.geninfo,
-        Cut = 'pt>170.',
+        Cut = 'pt>20.',
         addPruning = True,
         addSoftDrop = True,
         addSoftDropSubjets = True,
         addNsub = True,
         maxTau = 3,
         subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
-        addEnergyCorrFunc = False,
+        addEnergyCorrFunc = True,
         associateTask = False,
         verbosity = 2 if self.verbose else 0,
         # 
@@ -1192,6 +1192,7 @@ def makeTreeFromMiniAOD(self,process):
     process.puppiSpecificAK15 = patPuppiJetSpecificProducer.clone(
         src = JetAK15Tag
         )
+
     # update userfloats (used for jet ID, including ID for JEC/JER variations)
     process, JetAK15Tag = addJetInfo(
         process, JetAK15Tag,
@@ -1212,7 +1213,8 @@ def makeTreeFromMiniAOD(self,process):
         storeProperties=2,
         puppiSpecific = 'puppiSpecificAK15',
         subjetTag = 'SoftDrop',
-        doECFs = False,
+        #doECFs = False,
+	doECFs = True,
         isAK15 = True
         )
 
