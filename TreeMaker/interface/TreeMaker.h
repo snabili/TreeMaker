@@ -387,11 +387,14 @@ class TreeNestedVector : public TreeObject<std::vector<std::vector<Base>>> {
 			else 				return;
 			for(auto& sub : all) {
 				accum.insert(std::end(accum), std::begin(sub), std::end(sub));
-				offsets.insert(std::end(offsets), accum.size());
+				// offsets.insert(std::end(offsets), accum.size());
+				// >> TK Aug18: Store the size of the sub-array instead
+				offsets.insert(std::end(offsets), sub.size());
 			}
 			// This protects against the case where there were >=1 empty sub-vectors, and only empty vectors
 			// Thus, nothing will be in the output (accum) vector, but the offsets would be all '0'
-			if (accum.size() == 0) offsets.clear();
+			// >> TK Aug18: Write zeros too, to prevent problems with indexing on JaggedArrays later
+			// if (accum.size() == 0) offsets.clear();
 		}
 		void SetConsumes(edm::ConsumesCollector && iC) override{
 			tok = iC.consumes<Top>(this->tag);
