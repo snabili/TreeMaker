@@ -317,7 +317,7 @@ def makeTreeFromMiniAOD(self,process):
                 subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
                 JETCorrLevels = levels,
                 subJETCorrLevels = levels,
-                addEnergyCorrFunc = False,
+                addEnergyCorrFunc = True,
                 associateTask = False,
                 verbosity = 2 if self.verbose else 0,
             )
@@ -1174,7 +1174,7 @@ def makeTreeFromMiniAOD(self,process):
         addNsub = True,
         maxTau = 3,
         subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
-        addEnergyCorrFunc = False,
+        addEnergyCorrFunc = True,
         associateTask = False,
         verbosity = 2 if self.verbose else 0,
         # 
@@ -1213,7 +1213,7 @@ def makeTreeFromMiniAOD(self,process):
         storeProperties=2,
         puppiSpecific = 'puppiSpecificAK15',
         subjetTag = 'SoftDrop',
-        doECFs = False,
+	doECFs = True,
         isAK15 = True
         )
 
