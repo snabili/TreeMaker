@@ -940,16 +940,29 @@ def makeTreeFromMiniAOD(self,process):
             jetPtMin = 170.,
             src = cms.InputTag("packedGenParticles"),
         )
+	process.ak8GenJetsSoftDropbeta1 = ak8GenJetsNoNu.clone(
+            useSoftDrop = cms.bool(True),
+            zcut = cms.double(0.1),
+            beta = cms.double(1.0),
+            R0   = cms.double(0.5),
+            useExplicitGhosts = cms.bool(True),
+            writeCompound = cms.bool(True),
+            jetCollInstanceName=cms.string("SubJets"),
+            jetPtMin = 170.,
+            src = cms.InputTag("packedGenParticles"),
+        )
 
         process.ak8GenJetProperties = cms.EDProducer("GenJetProperties",
             GenJetTag = cms.InputTag("slimmedGenJetsAK8"),
             PrunedGenJetTag = cms.InputTag("ak8GenJetsPruned"),
             SoftDropGenJetTag = cms.InputTag("ak8GenJetsSoftDrop"),
+            SoftDropb1GenJetTag = cms.InputTag("ak8GenJetsSoftDropbeta1"),
             distMax = cms.double(0.8),
             jetPtFilter = cms.double(150),
         )
         self.VectorDouble.extend([
             'ak8GenJetProperties:softDropMass(GenJetsAK8_softDropMass)',
+	    'ak8GenJetProperties:softDropb1Mass(GenJetsAK8_softDropb1Mass)',
         ])
         self.VectorInt.extend([
             'ak8GenJetProperties:multiplicity(GenJetsAK8_multiplicity)',
@@ -1171,6 +1184,7 @@ def makeTreeFromMiniAOD(self,process):
         addPruning = True,
         addSoftDrop = True,
         addSoftDropSubjets = True,
+	addSoftDropb1 = True,
         addNsub = True,
         maxTau = 3,
         subjetBTagDiscriminators = ['pfCombinedInclusiveSecondaryVertexV2BJetTags'],
@@ -1183,9 +1197,35 @@ def makeTreeFromMiniAOD(self,process):
         JETCorrLevels = JETCorrLevels,
         subJETCorrLevels = JETCorrLevels,
         )
+    '''
+    from RecoJets.Configuration.RecoPFJets_cff import ak8PFJetsCHSSoftDrop
+    process.ak15PFJetsPuppiSoftDropb1 = ak8PFJetsCHSSoftDrop.clone(
+	#src = cms.InputTag("ak15PFJetsPuppiConstituents"),
+	src = cms.InputTag("GoodJetsAK15"),
+	rParam = 1.5,
+        jetAlgorithm = 'ak',
+        useExplicitGhosts=True,
+        R0= cms.double(1.5),
+        zcut=cms.double(0.1),
+        beta=cms.double(2.0),
+        doAreaFastjet = cms.bool(True),
+        writeCompound = cms.bool(True),
+        jetCollInstanceName=cms.string('SubJets') )
 
-    JetAK15Tag = cms.InputTag("packedPatJetsAK15PFPuppiSoftDrop")
-    subJetAK15Tag = cms.InputTag("selectedPatJetsAK15PFPuppiSoftDropPacked:SubJets")
+    process.JetProperties.properties.extend(["softDropb1Mass"]) 
+
+    process.ak15JetProperties = cms.EDProducer("JetProperties",
+        JetTag = cms.InputTag("GoodJetsAK15"),
+	debug = cms.bool(True),
+	properties = 'SoftDrop'
+    )
+    self.VectorDouble.extend([
+        'ak15JetProperties:softDropb1Mass(JetsAK15_softDropb1Mass)',
+    ])'''
+
+    JetAK15Tag = cms.InputTag("packedPatJetsAK15PFPuppiSoftDrop")# this is where softDrop is added to AK15. reference to https://github.com/TreeMaker/JetToolbox/blob/jetToolbox_94X/python/jetToolbox_cff.py#L526-L541
+    #JetAK15Tag = cms.InputTag("packedPatJetsAK15PFPuppiSoftDropbeta1")#try to define SD with beta =2 needs a lot of modifications in jetToolbox
+    subJetAK15Tag = cms.InputTag("selectedPatJetsAK15PFPuppiSoftDropPacked:SubJets")#where is it used???
 
     # get puppi-specific multiplicities
     from PhysicsTools.PatAlgos.patPuppiJetSpecificProducer_cfi import patPuppiJetSpecificProducer
@@ -1220,6 +1260,8 @@ def makeTreeFromMiniAOD(self,process):
     process.JetPropertiesAK15.neutralHadronPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralHadronPuppiMultiplicity")
     process.JetPropertiesAK15.neutralPuppiMultiplicity = cms.vstring("puppiSpecificAK15:neutralPuppiMultiplicity")
     process.JetPropertiesAK15.photonPuppiMultiplicity = cms.vstring("puppiSpecificAK15:photonPuppiMultiplicity")
+
+
 
     ## ----------------------------------------------------------------------------------------------
     ## ----------------------------------------------------------------------------------------------

@@ -301,16 +301,19 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
             JetTag       = GoodJetsTag,
             properties = cms.vstring(
                 "softDropMass"          ,
+		"softDropb1Mass"          ,
                 "bDiscriminatorCSV"     ,
                 "subjets"               ,
             )
         )
         # specify userfloats
         JetPropertiesAK8.softDropMass = cms.vstring(subjetTag) # computed from subjets
+	JetPropertiesAK8.softDropb1Mass = cms.vstring(subjetTag) # computed from subjets
         JetPropertiesAK8.bDiscriminatorCSV = cms.vstring('pfBoostedDoubleSecondaryVertexAK8BJetTags')
         JetPropertiesAK8.subjets = cms.vstring(subjetTag)
         self.VectorDouble.extend([
             'JetProperties'+suff+':softDropMass(Jets'+suff+'_softDropMass)',
+	    'JetProperties'+suff+':softDropb1Mass(Jets'+suff+'_softDropb1Mass)',
             'JetProperties'+suff+':bDiscriminatorCSV(Jets'+suff+'_doubleBDiscriminator)',
         ])
         self.VectorVectorLorentzVector.extend([

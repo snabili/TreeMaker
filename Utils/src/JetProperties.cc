@@ -271,6 +271,7 @@ class NamedPtr_softDropMass : public NamedPtr<double> {
 		}
 };
 DEFINE_NAMED_PTR(softDropMass);
+DEFAULT_NAMED_PTR(softDropMass,softDropb1Mass);
 
 //deltaR of axes for tau1_beta1, tau1_beta2
 class NamedPtr_lean : public NamedPtr<double> {
