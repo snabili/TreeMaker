@@ -2,7 +2,7 @@
 
 CMSSWVER=CMSSW_10_2_21
 FORK=TreeMaker
-BRANCH=Run2_2017
+BRANCH=dev-ECF-snabili
 ACCESS=ssh
 CORES=8
 NAME=""
@@ -163,7 +163,7 @@ fi
 # outside repositories
 git clone ${ACCESS_GITHUB}TreeMaker/JetToolbox.git JMEAnalysis/JetToolbox -b jetToolbox_94X
 git clone ${ACCESS_GITHUB}kpedro88/CondorProduction.git Condor/Production
-git clone ${ACCESS_GITHUB}${FORK}/TreeMaker.git -b ${BRANCH}
+git clone git@github.com:boostedsvj/TreeMaker.git -b ${BRANCH}
 
 # compile
 scram b -j ${CORES}
