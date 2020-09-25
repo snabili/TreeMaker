@@ -345,32 +345,27 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
                  JetPropertiesAK8.ecfM2b2 = cms.vstring('ak15PFJetsPuppiSoftDropValueMap:mb2AK15PuppiSoftDropM2')
                  JetPropertiesAK8.ecfM3b1 = cms.vstring('ak15PFJetsPuppiSoftDropValueMap:mb1AK15PuppiSoftDropM3')
                  JetPropertiesAK8.ecfM3b2 = cms.vstring('ak15PFJetsPuppiSoftDropValueMap:mb2AK15PuppiSoftDropM3')
+
+	    	 self.VectorDouble.extend([
+	       		'JetProperties'+suff+':ecfC2b1(Jets'+suff+'_ecfC2b1)',
+	       		'JetProperties'+suff+':ecfC2b2(Jets'+suff+'_ecfC2b2)',
+	       		'JetProperties'+suff+':ecfC3b1(Jets'+suff+'_ecfC3b1)',
+	       		'JetProperties'+suff+':ecfC3b2(Jets'+suff+'_ecfC3b2)',
+	       		'JetProperties'+suff+':ecfM2b1(Jets'+suff+'_ecfM2b1)',
+	       		'JetProperties'+suff+':ecfM2b2(Jets'+suff+'_ecfM2b2)',
+	       		'JetProperties'+suff+':ecfM3b1(Jets'+suff+'_ecfM3b1)',
+	       		'JetProperties'+suff+':ecfM3b2(Jets'+suff+'_ecfM3b2)',
+	         ])
             else:
            	 JetPropertiesAK8.ecfN2b1 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:nb1AK8PuppiSoftDropN2')
            	 JetPropertiesAK8.ecfN2b2 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:nb2AK8PuppiSoftDropN2')
            	 JetPropertiesAK8.ecfN3b1 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:nb1AK8PuppiSoftDropN3')
            	 JetPropertiesAK8.ecfN3b2 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:nb2AK8PuppiSoftDropN3')
-		 JetPropertiesAK8.ecfC2b1 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:cb1AK8PuppiSoftDropC2')
-                 JetPropertiesAK8.ecfC2b2 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:cb2AK8PuppiSoftDropC2')
-                 JetPropertiesAK8.ecfC3b1 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:cb1AK8PuppiSoftDropC3')
-                 JetPropertiesAK8.ecfC3b2 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:cb2AK8PuppiSoftDropC3')
-                 JetPropertiesAK8.ecfM2b1 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:mb1AK8PuppiSoftDropM2')
-                 JetPropertiesAK8.ecfM2b2 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:mb2AK8PuppiSoftDropM2')
-                 JetPropertiesAK8.ecfM3b1 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:mb1AK8PuppiSoftDropM3')
-                 JetPropertiesAK8.ecfM3b2 = cms.vstring('ak8PFJetsPuppiSoftDropValueMap:mb2AK8PuppiSoftDropM3')
             self.VectorDouble.extend([
                 'JetProperties'+suff+':ecfN2b1(Jets'+suff+'_ecfN2b1)',
                 'JetProperties'+suff+':ecfN2b2(Jets'+suff+'_ecfN2b2)',
                 'JetProperties'+suff+':ecfN3b1(Jets'+suff+'_ecfN3b1)',
                 'JetProperties'+suff+':ecfN3b2(Jets'+suff+'_ecfN3b2)',
-		'JetProperties'+suff+':ecfC2b1(Jets'+suff+'_ecfC2b1)',
-                'JetProperties'+suff+':ecfC2b2(Jets'+suff+'_ecfC2b2)',
-                'JetProperties'+suff+':ecfC3b1(Jets'+suff+'_ecfC3b1)',
-                'JetProperties'+suff+':ecfC3b2(Jets'+suff+'_ecfC3b2)',
-		'JetProperties'+suff+':ecfM2b1(Jets'+suff+'_ecfM2b1)',
-                'JetProperties'+suff+':ecfM2b2(Jets'+suff+'_ecfM2b2)',
-                'JetProperties'+suff+':ecfM3b1(Jets'+suff+'_ecfM3b1)',
-                'JetProperties'+suff+':ecfM3b2(Jets'+suff+'_ecfM3b2)',
             ])
 
         if self.deepAK8 and doDeepAK8:
