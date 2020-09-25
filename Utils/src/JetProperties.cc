@@ -112,6 +112,14 @@ DEFAULT_NAMED_PTR(D,ecfN2b1);
 DEFAULT_NAMED_PTR(D,ecfN2b2);
 DEFAULT_NAMED_PTR(D,ecfN3b1);
 DEFAULT_NAMED_PTR(D,ecfN3b2);
+DEFAULT_NAMED_PTR(D,ecfC2b1);
+DEFAULT_NAMED_PTR(D,ecfC2b2);
+DEFAULT_NAMED_PTR(D,ecfC3b1);
+DEFAULT_NAMED_PTR(D,ecfC3b2);
+DEFAULT_NAMED_PTR(D,ecfM2b1);
+DEFAULT_NAMED_PTR(D,ecfM2b2);
+DEFAULT_NAMED_PTR(D,ecfM3b1);
+DEFAULT_NAMED_PTR(D,ecfM3b2);
 DEFAULT_NAMED_PTR(D,neutralPuppiMultiplicity);
 DEFAULT_NAMED_PTR(D,neutralHadronPuppiMultiplicity);
 DEFAULT_NAMED_PTR(D,photonPuppiMultiplicity);
@@ -271,7 +279,6 @@ class NamedPtr_softDropMass : public NamedPtr<double> {
 		}
 };
 DEFINE_NAMED_PTR(softDropMass);
-DEFAULT_NAMED_PTR(softDropMass,softDropb1Mass);
 
 //deltaR of axes for tau1_beta1, tau1_beta2
 class NamedPtr_lean : public NamedPtr<double> {
