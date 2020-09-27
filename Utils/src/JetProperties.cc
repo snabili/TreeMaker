@@ -120,6 +120,8 @@ DEFAULT_NAMED_PTR(D,ecfM2b1);
 DEFAULT_NAMED_PTR(D,ecfM2b2);
 DEFAULT_NAMED_PTR(D,ecfM3b1);
 DEFAULT_NAMED_PTR(D,ecfM3b2);
+DEFAULT_NAMED_PTR(D,ecfD2b1);
+DEFAULT_NAMED_PTR(D,ecfD2b2);
 DEFAULT_NAMED_PTR(D,neutralPuppiMultiplicity);
 DEFAULT_NAMED_PTR(D,neutralHadronPuppiMultiplicity);
 DEFAULT_NAMED_PTR(D,photonPuppiMultiplicity);
