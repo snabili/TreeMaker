@@ -29,8 +29,6 @@
 
 #include "TreeMaker/Utils/interface/EnergyFractionCalculator.h"
 
-#include "TLorentzVector.h"
-
 typedef math::XYZTLorentzVector LorentzVector;
 
 // base class
@@ -114,6 +112,16 @@ DEFAULT_NAMED_PTR(D,ecfN2b1);
 DEFAULT_NAMED_PTR(D,ecfN2b2);
 DEFAULT_NAMED_PTR(D,ecfN3b1);
 DEFAULT_NAMED_PTR(D,ecfN3b2);
+DEFAULT_NAMED_PTR(D,ecfC2b1);
+DEFAULT_NAMED_PTR(D,ecfC2b2);
+DEFAULT_NAMED_PTR(D,ecfC3b1);
+DEFAULT_NAMED_PTR(D,ecfC3b2);
+DEFAULT_NAMED_PTR(D,ecfM2b1);
+DEFAULT_NAMED_PTR(D,ecfM2b2);
+DEFAULT_NAMED_PTR(D,ecfM3b1);
+DEFAULT_NAMED_PTR(D,ecfM3b2);
+DEFAULT_NAMED_PTR(D,ecfD2b1);
+DEFAULT_NAMED_PTR(D,ecfD2b2);
 DEFAULT_NAMED_PTR(D,neutralPuppiMultiplicity);
 DEFAULT_NAMED_PTR(D,neutralHadronPuppiMultiplicity);
 DEFAULT_NAMED_PTR(D,photonPuppiMultiplicity);
@@ -374,33 +382,33 @@ class NamedPtr_NumChadrons : public NamedPtr<int> {
 DEFINE_NAMED_PTR(NumChadrons);
 
 //----------------------------------------------------------------------------------------------------------------------------------------
-//TLorentzVectors
+//math::PtEtaPhiELorentzVectors
 
-class NamedPtr_constituents : public NamedPtr<std::vector<TLorentzVector>> {
+class NamedPtr_constituents : public NamedPtr<std::vector<math::PtEtaPhiELorentzVector>> {
 	public:
-		using NamedPtr<std::vector<TLorentzVector>>::NamedPtr;
+		using NamedPtr<std::vector<math::PtEtaPhiELorentzVector>>::NamedPtr;
 		void get_property(const pat::Jet& Jet) override {
-			std::vector<TLorentzVector> partvecs;
+			std::vector<math::PtEtaPhiELorentzVector> partvecs;
 			for(unsigned k = 0; k < Jet.numberOfDaughters(); ++k){
 				const reco::Candidate* subpart = Jet.daughter(k);
-				partvecs.emplace_back(subpart->px(),subpart->py(),subpart->pz(),subpart->energy());			
+				partvecs.emplace_back(subpart->pt(),subpart->eta(),subpart->phi(),subpart->energy());			
 			}
-			std::sort(partvecs.begin(), partvecs.end(), [] (const TLorentzVector& a, const TLorentzVector& b){return a.Pt() > b.Pt();} );
+			std::sort(partvecs.begin(), partvecs.end(), [] (const math::PtEtaPhiELorentzVector& a, const math::PtEtaPhiELorentzVector& b){return a.Pt() > b.Pt();} );
 			ptr->push_back(partvecs);
 		}
 };
 DEFINE_NAMED_PTR(constituents);
 
-class NamedPtr_subjets : public NamedPtr<std::vector<TLorentzVector>> {
+class NamedPtr_subjets : public NamedPtr<std::vector<math::PtEtaPhiELorentzVector>> {
 	public:
-		using NamedPtr<std::vector<TLorentzVector>>::NamedPtr;
+		using NamedPtr<std::vector<math::PtEtaPhiELorentzVector>>::NamedPtr;
 		void get_property(const pat::Jet& Jet) override {
-			std::vector<TLorentzVector> subvecs;
+			std::vector<math::PtEtaPhiELorentzVector> subvecs;
 			const auto& subjets = Jet.subjets(extraInfo.at(0));
 			subvecs.reserve(subjets.size());
 			for (const auto& subjet : subjets) {
 				const auto& p4 = subjet->p4();
-				subvecs.emplace_back(p4.px(),p4.py(),p4.pz(),p4.energy());
+				subvecs.emplace_back(p4.pt(),p4.eta(),p4.phi(),p4.energy());
 			}
 			ptr->push_back(subvecs);
 		}
@@ -576,16 +584,16 @@ JetProperties::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 	if (!GenSubjetTok_.isUninitialized()) iEvent.getByToken(GenSubjetTok_,GenSubjets);
 	if( Jets.isValid() ) {
 		for(const auto& Jet : *Jets){
+			//for debugging: print out available subjet collections, btag discriminators, userfloats/ints
+			//will recurse through subjet collections if any
+			if(debug){
+				edm::LogInfo("TreeMaker") << debugMessage(Jet,JetTag_.encode());
+			}
 			EnergyFractionCalculator efc(Jet);
 			for(auto & Ptr : Ptrs_){
 				if(Ptr->fraction) Ptr->get_property(efc);
 				else if(GenSubjets.isValid() && Ptr->response) Ptr->get_property(Jet,*GenSubjets);
 				else Ptr->get_property(Jet);
-			}
-			//for debugging: print out available subjet collections, btag discriminators, userfloats/ints
-			//will recurse through subjet collections if any
-			if(debug){
-				edm::LogInfo("TreeMaker") << debugMessage(Jet,JetTag_.encode());
 			}
 		}
 	}
